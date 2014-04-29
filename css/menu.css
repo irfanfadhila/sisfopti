@@ -1,0 +1,23 @@
+#menu
+{
+	display:block;
+    font-family:Arial;
+    text-align:left;
+    letter-spacing:normal;
+}
+
+#menu ul
+{
+	width:100%;
+    margin:0; 
+    padding:0;
+    font-size:0;
+    background:black;
+    border:1px solid white;
+    display:inline-block;
+    list-style:none;
+    position:relative;
+    z-index:999999990;
+    border-radius:4px;
+    box-shadow: 0px 2px 5px #DDDDDD;
+}
