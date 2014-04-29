@@ -25,9 +25,11 @@
 		<?php echo $form->error($model,'id_service_request'); ?>
 	</div>
 -->
+<table>
+<tr>
 	<div class="row">
-		 <?php echo $form->labelEx($serreq,'tgl_mulai'); ?>
-	                <?php 
+		 <td><?php echo $form->labelEx($serreq,'tgl_mulai'); ?></td>
+	              <td>  <?php 
 	                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	                        'name'=>'ServiceRequest[tgl_mulai]',
 	                        'id'=>'ServiceRequest_tgl_mulai',
@@ -41,13 +43,14 @@
 	                                'style'=>'height:20px;'
 	                        ),
 	                ));
-	                ?>              
-		<?php echo $form->error($serreq,'tgl_mulai'); ?>
+	                ?>              </td>
+		<td><?php echo $form->error($serreq,'tgl_mulai'); ?></td>
 	</div>
-
+</tr>
+<tr>
 	<div class="row">
-		 <?php echo $form->labelEx($serreq,'tgl_selesai'); ?>
-	                <?php 
+		 <td><?php echo $form->labelEx($serreq,'tgl_selesai'); ?></td>
+	               <td> <?php 
 	                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	                        'name'=>'ServiceRequest[tgl_selesai]',
 	                        'id'=>'tgl_selesai',
@@ -61,28 +64,31 @@
 	                                'style'=>'height:20px;'
 	                        ),
 	                ));
-	                ?>              
-		<?php echo $form->error($serreq,'tgl_selesai'); ?>
+	                ?>              </td>
+		<td><?php echo $form->error($serreq,'tgl_selesai'); ?></td>
 	</div>
-
+</tr>
+<tr>
 	<div class="row">
-		<?php echo $form->labelEx($serreq,'keperluan'); ?>
-		<?php echo $form->textField($serreq,'keperluan',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($serreq,'keperluan'); ?>
+		<td><?php echo $form->labelEx($serreq,'keperluan'); ?></td>
+		<td><?php echo $form->textField($serreq,'keperluan',array('size'=>30,'maxlength'=>30)); ?></td>
+		<td><?php echo $form->error($serreq,'keperluan'); ?></td>
 	</div>
-
+</tr>
+<tr>
 	<div class="row">
-		<?php echo $form->labelEx($model,'size'); ?>
-		<?php echo $form->textField($model,'size',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'size'); ?>
+		<td><?php echo $form->labelEx($model,'size'); ?></td>
+		<td><?php echo $form->textField($model,'size',array('size'=>20,'maxlength'=>20)); ?></td>
+		<td><?php echo $form->error($model,'size'); ?></td>
 	</div>
-
+</tr>
+<tr>
 	<div class="row">
-		<?php echo $form->labelEx($model,'pembimbing'); ?>
-		<?php echo $form->textField($model,'pembimbing',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($model,'pembimbing'); ?>
+		<td><?php echo $form->labelEx($model,'pembimbing'); ?></td>
+		<td><?php echo $form->textField($model,'pembimbing',array('size'=>30,'maxlength'=>30)); ?></td>
+		<td><?php echo $form->error($model,'pembimbing'); ?></td>
 	</div>
-
+</tr>
 
 	<tr>
 		<div class="row">
@@ -93,13 +99,15 @@
 		); ?></td>
 		</div>
 	</tr>
+	<tr>
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Submit', array('name' => 'button1')); ?>
+		<td><?php echo CHtml::submitButton('Submit', array('name' => 'button1')); ?>
 		<? echo '&nbsp;&nbsp;&nbsp;'; ?>
-		<?php echo CHtml::submitButton('Save', array('name' => 'button2')); ?> 
+		<?php echo CHtml::submitButton('Save', array('name' => 'button2')); ?></td> 
 
 	</div>
-
+	</tr>
+</table>
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
