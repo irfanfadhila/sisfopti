@@ -26,21 +26,49 @@
 	</div>
 -->
 	<div class="row">
-		<?php echo $form->labelEx($model2,'tgl_mulai'); ?>
-		<?php echo $form->textField($model2,'tgl_mulai',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($model2,'tgl_mulai'); ?>
+		 <?php echo $form->labelEx($serreq,'tgl_mulai'); ?>
+	                <?php 
+	                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	                        'name'=>'ServiceRequest[tgl_mulai]',
+	                        'id'=>'ServiceRequest_tgl_mulai',
+	                        'value'=>$serreq->tgl_mulai,
+	                        // additional javascript options for the date picker plugin
+	                        'options'=>array(
+	                                'dateFormat'=>'yy-mm-dd',
+	                                'showAnim'=>'fold',
+	                        ),
+	                        'htmlOptions'=>array(
+	                                'style'=>'height:20px;'
+	                        ),
+	                ));
+	                ?>              
+		<?php echo $form->error($serreq,'tgl_mulai'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model2,'tgl_selesai'); ?>
-		<?php echo $form->textField($model2,'tgl_selesai',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($model2,'tgl_selesai'); ?>
+		 <?php echo $form->labelEx($serreq,'tgl_selesai'); ?>
+	                <?php 
+	                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	                        'name'=>'ServiceRequest[tgl_selesai]',
+	                        'id'=>'tgl_selesai',
+	                        'value'=>$serreq->tgl_mulai,
+	                        // additional javascript options for the date picker plugin
+	                        'options'=>array(
+	                                'dateFormat'=>'yy-mm-dd',
+	                                'showAnim'=>'fold',
+	                        ),
+	                        'htmlOptions'=>array(
+	                                'style'=>'height:20px;'
+	                        ),
+	                ));
+	                ?>              
+		<?php echo $form->error($serreq,'tgl_selesai'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model2,'keperluan'); ?>
-		<?php echo $form->textField($model2,'keperluan',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($model2,'keperluan'); ?>
+		<?php echo $form->labelEx($serreq,'keperluan'); ?>
+		<?php echo $form->textField($serreq,'keperluan',array('size'=>30,'maxlength'=>30)); ?>
+		<?php echo $form->error($serreq,'keperluan'); ?>
 	</div>
 
 	<div class="row">
@@ -55,8 +83,21 @@
 		<?php echo $form->error($model,'pembimbing'); ?>
 	</div>
 
+
+	<tr>
+		<div class="row">
+			<td><?php echo $form->labelEx($serreq,'reviewer 1'); ?></td>
+			<td><?php echo CHtml::activeDropDownList($serreq, 'id_reviewer1', $serreq->getReviewer(),
+			array('prompt' => '(Select reviewer)')
+
+		); ?></td>
+		</div>
+	</tr>
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton('Submit', array('name' => 'button1')); ?>
+		<? echo '&nbsp;&nbsp;&nbsp;'; ?>
+		<?php echo CHtml::submitButton('Save', array('name' => 'button2')); ?> 
+
 	</div>
 
 <?php $this->endWidget(); ?>
