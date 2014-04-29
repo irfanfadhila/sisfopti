@@ -63,40 +63,94 @@ class FasilitasMahasiswaController extends Controller
 	public function actionCreate()
 	{
 		$model=new FasilitasMahasiswa;
-		$model2=new ServiceRequest;
+		$serreq=new ServiceRequest;
 
+		$userName= Yii::app()->user->name;  
+		$userrole = UserRole::model()->findByAttributes(array('username'=>$userName));
+        echo $userrole->id_user_role;
+
+        $nameserv= NamaService::model()->findByAttributes(array('id_nama_service'=>1));
+        echo $nameserv->id_nama_service;
+
+        $rev2 = UserRole::model()->findByAttributes(array('id_user_role'=>4));
+        echo $rev2->id_user_role;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['FasilitasMahasiswa'], $_POST['ServiceRequest']))
 		{
 			$model->attributes=$_POST['FasilitasMahasiswa'];
-			$model2->attributes=$_POST['ServiceRequest'];
+			$serreq->attributes=$_POST['ServiceRequest'];
 
 			$valid=$model->validate()  && $valid; 
-			$valid=$model2->validate();
+			$valid=$serreq->validate();
+			$valid=$userrole->validate();
+			$valid=$nameserv->validate();
+			$valid=$rev2->validate();
 
-			if($valid)
-			{
-				if($model2->save(false))
+			if(isset($_POST['button1']))
+    	    {
+    	    	$status = Status::model()->findByAttributes(array('id_status'=>1));
+    			echo $status->id_status;
+				$valid=$status->validate();
+				if($valid)
 				{
-					$model->id_service_request = $model2->id_service_request;
-					$model->save(false);
+					if($serreq->save(false) && $nameserv->save(false))
+					{
+						$model->id_service_request = $serreq->id_service_request;
+						$serreq->id_status = $status->id_status;
+						$serreq->id_user_role = $userrole->id_user_role;
+						$serreq->id_nama_service = $nameserv->id_nama_service;
+						$serreq->id_reviewer2 = $rev2->id_user_role;
+						$model->save(false);
 
+					}
+					$model->save(false);
+					$serreq->save(false);
+					$userrole->save(false);
+					$nameserv->save(false);
+					$rev2->save(false);
 				}
-				$model->save(false);
-				$model2->save(false);
+
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->id_service_request));
 			}
 
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_service_request));
+			if(isset($_POST['button2']))
+    	    {
+    	    	$status = Status::model()->findByAttributes(array('id_status'=>1));
+    			echo $status->id_status;
+				$valid=$status->validate();
+				if($valid)
+				{
+					if($serreq->save(false) && $nameserv->save(false))
+					{
+						$model->id_service_request = $serreq->id_service_request;
+						$serreq->id_status = $status->id_status;
+						$serreq->id_user_role = $userrole->id_user_role;
+						$serreq->id_nama_service = $nameserv->id_nama_service;
+						$serreq->id_reviewer2 = $rev2->id_user_role;
+						$model->save(false);
+
+					}
+					$model->save(false);
+					$serreq->save(false);
+					$userrole->save(false);
+					$nameserv->save(false);
+					$rev2->save(false);
+				}
+
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->id_service_request));
+			}
+
 		}
 
 		
 
 		$this->render('create',array(
 			'model'=>$model,
-			'model2'=>$model2,
+			'serreq'=>$serreq,
 		));
 	}
 
