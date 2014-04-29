@@ -8,14 +8,27 @@
  * @property string $tgl_mulai
  * @property string $tgl_selesai
  * @property string $keperluan
+ * @property integer $id_user_role
+ * @property integer $id_status
+ * @property integer $id_reviewer1
+ * @property integer $id_reviewer2
+ * @property integer $id_nama_service
+ * @property string $created_on
+ * @property string $modified_on
+ * @property string $review1_on
+ * @property string $review2_on
  *
  * The followings are the available model relations:
- * @property FasilitasMahasiswa $fasilitasMahasiswa
- * @property Pesan[] $pesans
  * @property ServerPenelitian $serverPenelitian
  * @property PeminjamanRuangan $peminjamanRuangan
  * @property PendaftaranDns $pendaftaranDns
- * @property UserRole[] $sisfopti.userRoles
+ * @property Pesan[] $pesans
+ * @property Status $idStatus
+ * @property UserRole $idUserRole
+ * @property UserRole $idReviewer1
+ * @property UserRole $idReviewer2
+ * @property NamaService $idNamaService
+ * @property FasilitasMahasiswa $fasilitasMahasiswa
  */
 class ServiceRequest extends CActiveRecord
 {
@@ -36,10 +49,11 @@ class ServiceRequest extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('tgl_mulai, tgl_selesai', 'required'),
-			array('keperluan', 'safe'),
+			array('id_user_role, id_status, id_reviewer1, id_reviewer2, id_nama_service', 'numerical', 'integerOnly'=>true),
+			array('keperluan, created_on, modified_on, review1_on, review2_on', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_service_request, tgl_mulai, tgl_selesai, keperluan', 'safe', 'on'=>'search'),
+			array('id_service_request, tgl_mulai, tgl_selesai, keperluan, id_user_role, id_status, id_reviewer1, id_reviewer2, id_nama_service, created_on, modified_on, review1_on, review2_on', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,12 +65,16 @@ class ServiceRequest extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'fasilitasMahasiswa' => array(self::HAS_ONE, 'FasilitasMahasiswa', 'id_service_request'),
-			'pesans' => array(self::HAS_MANY, 'Pesan', 'id_service_request'),
 			'serverPenelitian' => array(self::HAS_ONE, 'ServerPenelitian', 'id_service_request'),
 			'peminjamanRuangan' => array(self::HAS_ONE, 'PeminjamanRuangan', 'id_service_request'),
 			'pendaftaranDns' => array(self::HAS_ONE, 'PendaftaranDns', 'id_service_request'),
-			'sisfopti.userRoles' => array(self::MANY_MANY, 'UserRole', 'request(id_service_request, id_user_role)'),
+			'pesans' => array(self::HAS_MANY, 'Pesan', 'id_service_request'),
+			'idStatus' => array(self::BELONGS_TO, 'Status', 'id_status'),
+			'idUserRole' => array(self::BELONGS_TO, 'UserRole', 'id_user_role'),
+			'idReviewer1' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer1'),
+			'idReviewer2' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer2'),
+			'idNamaService' => array(self::BELONGS_TO, 'NamaService', 'id_nama_service'),
+			'fasilitasMahasiswa' => array(self::HAS_ONE, 'FasilitasMahasiswa', 'id_service_request'),
 		);
 	}
 
@@ -70,6 +88,15 @@ class ServiceRequest extends CActiveRecord
 			'tgl_mulai' => 'Tgl Mulai',
 			'tgl_selesai' => 'Tgl Selesai',
 			'keperluan' => 'Keperluan',
+			'id_user_role' => 'Id User Role',
+			'id_status' => 'Id Status',
+			'id_reviewer1' => 'Id Reviewer1',
+			'id_reviewer2' => 'Id Reviewer2',
+			'id_nama_service' => 'Id Nama Service',
+			'created_on' => 'Created On',
+			'modified_on' => 'Modified On',
+			'review1_on' => 'Review1 On',
+			'review2_on' => 'Review2 On',
 		);
 	}
 
@@ -95,11 +122,26 @@ class ServiceRequest extends CActiveRecord
 		$criteria->compare('tgl_mulai',$this->tgl_mulai,true);
 		$criteria->compare('tgl_selesai',$this->tgl_selesai,true);
 		$criteria->compare('keperluan',$this->keperluan,true);
+		$criteria->compare('id_user_role',$this->id_user_role);
+		$criteria->compare('id_status',$this->id_status);
+		$criteria->compare('id_reviewer1',$this->id_reviewer1);
+		$criteria->compare('id_reviewer2',$this->id_reviewer2);
+		$criteria->compare('id_nama_service',$this->id_nama_service);
+		$criteria->compare('created_on',$this->created_on,true);
+		$criteria->compare('modified_on',$this->modified_on,true);
+		$criteria->compare('review1_on',$this->review1_on,true);
+		$criteria->compare('review2_on',$this->review2_on,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+	 public function getReviewer()
+    { 
+     //this function returns the list of categories to use in a dropdown        
+      return CHtml::listData(UserRole::model()->findAll(array('condition'=>'role_no = 3')), 'id_user_role', 'username');
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.
