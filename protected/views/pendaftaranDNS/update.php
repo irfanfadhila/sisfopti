@@ -3,7 +3,7 @@
 /* @var $model PendaftaranDNS */
 
 $this->breadcrumbs=array(
-	'Pendaftaran DNS'=>array('index'),
+	'Pendaftaran Dns'=>array('index'),
 	$model->id_service_request=>array('view','id'=>$model->id_service_request),
 	'Update',
 );

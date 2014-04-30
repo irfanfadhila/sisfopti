@@ -3,7 +3,7 @@
 /* @var $model PendaftaranDNS */
 
 $this->breadcrumbs=array(
-	'Pendaftaran DNS'=>array('index'),
+	'Pendaftaran Dns'=>array('index'),
 	'Create',
 );
 /*
@@ -15,6 +15,6 @@ $this->menu=array(
 */
 ?>
 
-<h1>Request Pendaftaran DNS</h1>
+<h1>Create PendaftaranDNS</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model, 'model2'=>$model2)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'serreq'=>$serreq)); ?>
