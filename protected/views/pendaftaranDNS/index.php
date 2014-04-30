@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Pendaftaran DNS',
+	'Pendaftaran Dns',
 );
 
 $this->menu=array(

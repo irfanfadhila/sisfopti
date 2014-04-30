@@ -29,6 +29,13 @@
  * @property UserRole $idReviewer2
  * @property Status $idStatus
  * @property UserRole $idUserRole
+ * @property Pesan[] $pesans
+ * @property Status $idStatus
+ * @property UserRole $idUserRole
+ * @property UserRole $idReviewer1
+ * @property UserRole $idReviewer2
+ * @property NamaService $idNamaService
+ * @property FasilitasMahasiswa $fasilitasMahasiswa
  */
 class ServiceRequest extends CActiveRecord
 {
@@ -67,6 +74,7 @@ class ServiceRequest extends CActiveRecord
 		return array(
 			'serverPenelitian' => array(self::HAS_ONE, 'ServerPenelitian', 'id_service_request'),
 			'pendaftaranDns' => array(self::HAS_ONE, 'PendaftaranDns', 'id_service_request'),
+
 			'fasilitasMahasiswa' => array(self::HAS_ONE, 'FasilitasMahasiswa', 'id_service_request'),
 			'peminjamanRuangan' => array(self::HAS_ONE, 'PeminjamanRuangan', 'id_service_request'),
 			'pesans' => array(self::HAS_MANY, 'Pesan', 'id_service_request'),
@@ -75,6 +83,15 @@ class ServiceRequest extends CActiveRecord
 			'idReviewer2' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer2'),
 			'idStatus' => array(self::BELONGS_TO, 'Status', 'id_status'),
 			'idUserRole' => array(self::BELONGS_TO, 'UserRole', 'id_user_role'),
+
+			'pesans' => array(self::HAS_MANY, 'Pesan', 'id_service_request'),
+			'idStatus' => array(self::BELONGS_TO, 'Status', 'id_status'),
+			'idUserRole' => array(self::BELONGS_TO, 'UserRole', 'id_user_role'),
+			'idReviewer1' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer1'),
+			'idReviewer2' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer2'),
+			'idNamaService' => array(self::BELONGS_TO, 'NamaService', 'id_nama_service'),
+			'fasilitasMahasiswa' => array(self::HAS_ONE, 'FasilitasMahasiswa', 'id_service_request'),
+
 		);
 	}
 
@@ -154,12 +171,20 @@ class ServiceRequest extends CActiveRecord
 		));
 	}
 
-	public function historyRequestGrid()
+
+	/*public function historyRequestGrid()
 	{
 		$criteria = new CDbCriteria;
 
 
-	}
+	}*/
+
+	 public function getReviewer()
+    { 
+     //this function returns the list of categories to use in a dropdown        
+      return CHtml::listData(UserRole::model()->findAll(array('condition'=>'role_no = 3')), 'id_user_role', 'username');
+    }
+
 
 	/**
 	 * Returns the static model of the specified AR class.
