@@ -71,14 +71,18 @@
 <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($serreq,'keperluan'); ?></td>
-		<td><?php echo $form->textField($serreq,'keperluan',array('size'=>30,'maxlength'=>30)); ?></td>
+		<td><?php echo $form->textArea($serreq,'keperluan',array('rows'=>6, 'cols'=>50)); ?></td>
 		<td><?php echo $form->error($serreq,'keperluan'); ?></td>
 	</div>
 </tr>
 <tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'size'); ?></td>
-		<td><?php echo $form->textField($model,'size',array('size'=>20,'maxlength'=>20)); ?></td>
+		
+		<tr colspan ="3">
+			<td><?php echo $form->labelEx($model,'size'); ?></td>
+			<td><?php echo $form->textField($model,'size',array('size'=>13,'maxlength'=>20)); ?>
+			<?php echo $form->dropDownList($model,'size',array("Mb","Kb"),array('empty'=>'Select Value')); ?></td>
+		</tr>
 		<td><?php echo $form->error($model,'size'); ?></td>
 	</div>
 </tr>
