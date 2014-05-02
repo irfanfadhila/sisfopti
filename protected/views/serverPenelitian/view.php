@@ -19,6 +19,15 @@ $this->breadcrumbs=array(
 <h1>View ServerPenelitian #<?php echo $model->id_service_request; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$serreq,
+	'attributes'=>array(
+		'tgl_mulai',
+		'tgl_selesai',
+		'keperluan',
+	),
+)); ?>
+
+<?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_service_request',

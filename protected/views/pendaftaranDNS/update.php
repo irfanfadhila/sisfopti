@@ -18,4 +18,4 @@ $this->menu=array(
 
 <h1>Update PendaftaranDNS <?php echo $model->id_service_request; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'serreq'=>$serreq)); ?>

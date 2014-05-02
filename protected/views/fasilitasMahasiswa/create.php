@@ -7,14 +7,14 @@ $this->breadcrumbs=array(
 	'Request',
 );
 
-/*
+
 
 $this->menu=array(
 	array('label'=>'List FasilitasMahasiswa', 'url'=>array('index')),
 	array('label'=>'Manage FasilitasMahasiswa', 'url'=>array('admin')),
 );
 
-*/
+
 ?>
 
 

@@ -81,7 +81,8 @@
 		<tr colspan ="3">
 			<td><?php echo $form->labelEx($model,'size'); ?></td>
 			<td><?php echo $form->textField($model,'size',array('size'=>13,'maxlength'=>20)); ?>
-			<?php echo $form->dropDownList($model,'size',array("Mb","Kb"),array('empty'=>'Select Value')); ?></td>
+			<!-- <?php echo $form->dropDownList($model,'size',array("Mb","Kb"),array('empty'=>'Select Value')); ?> -->
+			</td>
 		</tr>
 		<td><?php echo $form->error($model,'size'); ?></td>
 	</div>
