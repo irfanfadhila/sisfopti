@@ -20,8 +20,15 @@
  *
  * The followings are the available model relations:
  * @property ServerPenelitian $serverPenelitian
- * @property PeminjamanRuangan $peminjamanRuangan
  * @property PendaftaranDns $pendaftaranDns
+ * @property FasilitasMahasiswa $fasilitasMahasiswa
+ * @property PeminjamanRuangan $peminjamanRuangan
+ * @property Pesan[] $pesans
+ * @property NamaService $idNamaService
+ * @property UserRole $idReviewer1
+ * @property UserRole $idReviewer2
+ * @property Status $idStatus
+ * @property UserRole $idUserRole
  * @property Pesan[] $pesans
  * @property Status $idStatus
  * @property UserRole $idUserRole
@@ -66,8 +73,17 @@ class ServiceRequest extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'serverPenelitian' => array(self::HAS_ONE, 'ServerPenelitian', 'id_service_request'),
-			'peminjamanRuangan' => array(self::HAS_ONE, 'PeminjamanRuangan', 'id_service_request'),
 			'pendaftaranDns' => array(self::HAS_ONE, 'PendaftaranDns', 'id_service_request'),
+
+			'fasilitasMahasiswa' => array(self::HAS_ONE, 'FasilitasMahasiswa', 'id_service_request'),
+			'peminjamanRuangan' => array(self::HAS_ONE, 'PeminjamanRuangan', 'id_service_request'),
+			'pesans' => array(self::HAS_MANY, 'Pesan', 'id_service_request'),
+			'idNamaService' => array(self::BELONGS_TO, 'NamaService', 'id_nama_service'),
+			'idReviewer1' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer1'),
+			'idReviewer2' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer2'),
+			'idStatus' => array(self::BELONGS_TO, 'Status', 'id_status'),
+			'idUserRole' => array(self::BELONGS_TO, 'UserRole', 'id_user_role'),
+
 			'pesans' => array(self::HAS_MANY, 'Pesan', 'id_service_request'),
 			'idStatus' => array(self::BELONGS_TO, 'Status', 'id_status'),
 			'idUserRole' => array(self::BELONGS_TO, 'UserRole', 'id_user_role'),
@@ -75,6 +91,7 @@ class ServiceRequest extends CActiveRecord
 			'idReviewer2' => array(self::BELONGS_TO, 'UserRole', 'id_reviewer2'),
 			'idNamaService' => array(self::BELONGS_TO, 'NamaService', 'id_nama_service'),
 			'fasilitasMahasiswa' => array(self::HAS_ONE, 'FasilitasMahasiswa', 'id_service_request'),
+
 		);
 	}
 
@@ -118,6 +135,23 @@ class ServiceRequest extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		//$criteria->select = array('*', new CDbExpression('DATE_FORMAT(t.tgl_mulai, "yy-mm-dd") AS tgl_mulai'));
+		//$criteria->select = array('*', new CDbExpression('DATE_FORMAT(t.tgl_selesai, "yy-mm-dd") AS tgl_selesai'));
+
+		/*if (isset($this->tgl_mulai) &&
+			preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/',
+			$this->tgl_mulai)) {
+			$criteria->condition = 'DATE_FORMAT(tgl_mulai, "yy-mm-dd") = :de';
+			$criteria->params = array(':de' => $this->tgl_mulai);
+		}
+
+		if (isset($this->tgl_selesai) &&
+			preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/',
+			$this->tgl_selesai)) {
+			$criteria->condition = 'DATE_FORMAT(tgl_selesai, "yy-mm-dd") = :de';
+			$criteria->params = array(':de' => $this->tgl_selesai);
+		}*/
+
 		$criteria->compare('id_service_request',$this->id_service_request);
 		$criteria->compare('tgl_mulai',$this->tgl_mulai,true);
 		$criteria->compare('tgl_selesai',$this->tgl_selesai,true);
@@ -137,11 +171,20 @@ class ServiceRequest extends CActiveRecord
 		));
 	}
 
+
+	/*public function historyRequestGrid()
+	{
+		$criteria = new CDbCriteria;
+
+
+	}*/
+
 	 public function getReviewer()
     { 
      //this function returns the list of categories to use in a dropdown        
       return CHtml::listData(UserRole::model()->findAll(array('condition'=>'role_no = 3')), 'id_user_role', 'username');
     }
+
 
 	/**
 	 * Returns the static model of the specified AR class.
