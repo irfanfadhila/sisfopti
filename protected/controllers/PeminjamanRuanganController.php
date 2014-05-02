@@ -51,8 +51,11 @@ class PeminjamanRuanganController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$serreq= ServiceRequest::model()->findByAttributes(array('id_service_request'=>$id));
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'serreq'=>$serreq,
+
 		));
 	}
 
@@ -69,7 +72,7 @@ class PeminjamanRuanganController extends Controller
 		$userrole = UserRole::model()->findByAttributes(array('username'=>$userName));
         echo $userrole->id_user_role;
 
-        $nameserv= NamaService::model()->findByAttributes(array('id_nama_service'=>1));
+        $nameserv= NamaService::model()->findByAttributes(array('id_nama_service'=>2));
         echo $nameserv->id_nama_service;
 
         $rev2 = UserRole::model()->findByAttributes(array('id_user_role'=>4));
@@ -81,6 +84,8 @@ class PeminjamanRuanganController extends Controller
 		{
 			$model->attributes=$_POST['PeminjamanRuangan'];
 			$serreq->attributes=$_POST['ServiceRequest'];
+			date_default_timezone_set('Asia/Jakarta');
+			$waktu = date('Y-m-d H:i:s');
 
 			$valid=$model->validate()  && $valid; 
 			$valid=$serreq->validate();
@@ -103,6 +108,7 @@ class PeminjamanRuanganController extends Controller
 						$serreq->id_user_role = $userrole->id_user_role;
 						$serreq->id_nama_service = $nameserv->id_nama_service;
 						$serreq->id_reviewer2 = $rev2->id_user_role;
+						$serreq->created_on = $waktu;
 						$model->save(false);
 
 					}
@@ -119,7 +125,7 @@ class PeminjamanRuanganController extends Controller
 
 			if(isset($_POST['button2']))
     	    {
-    	    	$status = Status::model()->findByAttributes(array('id_status'=>1));
+    	    	$status = Status::model()->findByAttributes(array('id_status'=>2));
     			echo $status->id_status;
 				$valid=$status->validate();
 				if($valid)
@@ -131,6 +137,7 @@ class PeminjamanRuanganController extends Controller
 						$serreq->id_user_role = $userrole->id_user_role;
 						$serreq->id_nama_service = $nameserv->id_nama_service;
 						$serreq->id_reviewer2 = $rev2->id_user_role;
+						$serreq->created_on = $waktu;
 						$model->save(false);
 
 					}
@@ -162,19 +169,71 @@ class PeminjamanRuanganController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$serreq= ServiceRequest::model()->findByAttributes(array('id_service_request'=>$id));
 
+		if(isset($_POST['PeminjamanRuangan'], $_POST['ServiceRequest']))
+		{
+			$model->attributes=$_POST['PeminjamanRuangan'];
+			$serreq->attributes=$_POST['ServiceRequest'];
+
+			$valid=$model->validate() ;
+			// && $valid; 
+			$valid=$serreq->validate();
+			date_default_timezone_set('Asia/Jakarta');
+			$waktu = date('Y-m-d H:i:s');
+		
+			if(isset($_POST['button1']))
+    	    {
+    	    	$status = Status::model()->findByAttributes(array('id_status'=>1));
+    			echo $status->id_status;
+				$valid=$status->validate();
+				if($valid)
+				{
+					if($serreq->save(false))
+					{
+						$serreq->id_status = $status->id_status;
+						$model->save(false);
+						$serreq->modified_on = $waktu;
+
+					}
+					$model->save(false);
+					$serreq->save(false);
+				}
+
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->id_service_request));
+			}
+
+			if(isset($_POST['button2']))
+    	    {
+    	    	$status = Status::model()->findByAttributes(array('id_status'=>2));
+    			echo $status->id_status;
+				$valid=$status->validate();
+				if($valid)
+				{
+					if($serreq->save(false))
+					{
+						$serreq->id_status = $status->id_status;
+						$model->save(false);
+						$serreq->modified_on = $waktu;
+
+					}
+					$model->save(false);
+					$serreq->save(false);
+				}
+
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->id_service_request));
+			}
+
+		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['PeminjamanRuangan']))
-		{
-			$model->attributes=$_POST['PeminjamanRuangan'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_service_request));
-		}
 
 		$this->render('update',array(
 			'model'=>$model,
+			'serreq'=>$serreq,
 		));
 	}
 
