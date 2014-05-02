@@ -17,6 +17,7 @@
 	<script src="<?php echo Yii::app()->request->baseUrl; ?>/css/ddmenu.js" type="text/javascript"></script>
 
 	<title><?php echo Yii::app()->name; ?></title>
+	<?php $user=Yii::app()->user; ?>
 </head>
 
 <body>
@@ -54,15 +55,18 @@
                             ), 
                         ), 
                         array('label'=>'History Request', 'url'=>array('/historyRequest/index')),
+                        array('label'=>'List Request', 'url'=>array('/listRequest/index'), 'visible'=>$user->checkAccess(2)),
+                        array('label'=>'List Request', 'url'=>array('/listRequest/index'), 'visible'=>$user->checkAccess(3)),
+                        array('label'=>'List Request', 'url'=>array('/listRequest/index'), 'visible'=>$user->checkAccess(4)),
                         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/login/logout')),
                     ), 
             	)); ?>
 			<?php } ?>
 		</ul>
 	</nav>
-	
+
 	<?php if (!Yii::app()->user->isGuest) { ?>
-		<div id="sidebar1" class="sidebar" style="float:left;">
+		<div id="sidebar1" class="sidebar">
 			<ul>
 				<li>
 					<h2>Profile</h2>
@@ -88,7 +92,7 @@
 		</div>
 	<?php   }   ?>
 
-	<div style="float:left;">
+	<div style="float:left; width:70%;">
 		<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
@@ -97,7 +101,7 @@
 
 	<?php endif?>
 
-	<?php echo $content; ?>
+	<div> <?php echo $content; ?> </div>
 
 	<div class="clear"></div>
 

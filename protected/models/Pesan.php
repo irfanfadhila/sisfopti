@@ -8,6 +8,8 @@
  * @property string $judul
  * @property string $isi
  * @property integer $id_service_request
+ * @property integer $id_user_role
+ * @property string $created_on
  *
  * The followings are the available model relations:
  * @property ServiceRequest $idServiceRequest
@@ -31,11 +33,12 @@ class Pesan extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id_pesan, judul, isi, id_service_request', 'required'),
-			array('id_pesan, id_service_request', 'numerical', 'integerOnly'=>true),
+			array('id_pesan, id_service_request, id_user_role', 'numerical', 'integerOnly'=>true),
 			array('judul', 'length', 'max'=>100),
+			array('created_on', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pesan, judul, isi, id_service_request', 'safe', 'on'=>'search'),
+			array('id_pesan, judul, isi, id_service_request, id_user_role, created_on', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +64,8 @@ class Pesan extends CActiveRecord
 			'judul' => 'Judul',
 			'isi' => 'Isi',
 			'id_service_request' => 'Id Service Request',
+			'id_user_role' => 'Id User Role',
+			'created_on' => 'Created On',
 		);
 	}
 
@@ -86,6 +91,8 @@ class Pesan extends CActiveRecord
 		$criteria->compare('judul',$this->judul,true);
 		$criteria->compare('isi',$this->isi,true);
 		$criteria->compare('id_service_request',$this->id_service_request);
+		$criteria->compare('id_user_role',$this->id_user_role);
+		$criteria->compare('created_on',$this->created_on,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

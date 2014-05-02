@@ -11,7 +11,7 @@
  * The followings are the available model relations:
  * @property ServiceRequest $idServiceRequest
  */
-class PendaftaranDNS extends CActiveRecord
+class PendaftaranDns extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -94,7 +94,7 @@ class PendaftaranDNS extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return PendaftaranDNS the static model class
+	 * @return PendaftaranDns the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

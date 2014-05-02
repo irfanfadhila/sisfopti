@@ -91,7 +91,7 @@ Yii::app()->clientScript->registerScript('re-install-date-picker', "
         array(
             'header'=>'Details',
             'class'=>'CLinkColumn',
-            'url'=>''
+            'url'=>'',
         ),
         array(
             'class'=>'CButtonColumn',

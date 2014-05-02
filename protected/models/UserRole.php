@@ -11,30 +11,15 @@
  *
  * The followings are the available model relations:
  * @property Role $roleNo
- * @property ServiceRequest[] $sisfopti.serviceRequests
+ * @property ServiceRequest[] $serviceRequests
+ * @property ServiceRequest[] $serviceRequests1
+ * @property ServiceRequest[] $serviceRequests2
  */
 class UserRole extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
-
-
- //digunakan untuk memproses data setelah validasi
-        protected function afterValidate() {
-            parent::afterValidate();
-            
-            //melakukan enkripsi pada data yang di input
-            $this->password = $this->encrypt($this->password);
-        }
-        
-        //membuat sebuah fungsi enkripsi
-        public function encrypt($value){
-            return md5($value);
-        }
-
-
-	
 	public function tableName()
 	{
 		return 'sisfopti.user_role';
@@ -67,7 +52,9 @@ class UserRole extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'roleNo' => array(self::BELONGS_TO, 'Role', 'role_no'),
-			'sisfopti.serviceRequests' => array(self::MANY_MANY, 'ServiceRequest', 'request(id_user_role, id_service_request)'),
+			'serviceRequests' => array(self::HAS_MANY, 'ServiceRequest', 'id_reviewer1'),
+			'serviceRequests1' => array(self::HAS_MANY, 'ServiceRequest', 'id_reviewer2'),
+			'serviceRequests2' => array(self::HAS_MANY, 'ServiceRequest', 'id_user_role'),
 		);
 	}
 
